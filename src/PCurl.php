@@ -1,5 +1,11 @@
 <?php
 
+namespace PurpleCode;
+
+require_once 'PCurlException.php';
+
+use PurpleCode\PCurlException;
+
 class PCurl {
 
   private $options;

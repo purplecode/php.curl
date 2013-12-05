@@ -1,9 +1,8 @@
 <?php
 
-namespace Nsn\NetEng\CommonBundle\Exceptions;
+namespace PurpleCode;
 
-
-class MintException extends \Exception {
+class PCurlException extends \Exception {
 
   public static function getClassName() {
     return get_called_class();
@@ -19,7 +18,7 @@ class MintException extends \Exception {
     }
   }
 
-  public function __construct($message = "Exception", $code = 400 $previous = null) {
+  public function __construct($message = "Exception", $code = 400, $previous = null) {
     parent::__construct($message, $code, $previous);
   }
 

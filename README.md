@@ -17,6 +17,7 @@ To install PCurl, use the following composer `require` statement:
 }
 
 ```
+or just copy-paste content of `src/` to your `libs`.
 
 Usage
 ------------
@@ -24,30 +25,30 @@ Usage
 Simple GET
 ```
 $pcurl = new PCurl('http://www.google.pl');
-$response = $cut->get('/');
+$response = $pcurl->get('/');
 ```
 
 Simple GET via HTTPS with certificate verification (more examples in test package)
 ```
 $pcurl = new PCurl('https://www.google.pl');
-$cut->useSSLCertificate(<path to crt/pem file>);
-$response = $cut->get('/');
+$pcurl->useSSLCertificate(<path to crt/pem file>);
+$response = $pcurl->get('/');
 ```
 and a similar example without it
 ```
 $pcurl = new PCurl('https://www.google.pl');
-$cut->ignoreSSLCertificate();
-$response = $cut->get('/');
+$pcurl->ignoreSSLCertificate();
+$response = $pcurl->get('/');
 ```
 
 Sample POST
 ```
 $pcurl = new PCurl('http://some.fancy.page');
-$cut->proxy(host, port);
-$cut->auth(user, pass);
-$cut->header('Cache-Control: no-cache');
-$cut->contentType('application/xml');
-$response = $cut->post('<a>makapaka</a>');
+$pcurl->proxy(host, port);
+$pcurl->auth(user, pass);
+$pcurl->header('Cache-Control: no-cache');
+$pcurl->contentType('application/xml');
+$response = $pcurl->post('<a>makapaka</a>');
 ```
 
 Enjoy!

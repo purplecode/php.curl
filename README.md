@@ -48,7 +48,7 @@ $pcurl->proxy(host, port);
 $pcurl->auth(user, pass);
 $pcurl->header('Cache-Control: no-cache');
 $pcurl->contentType('application/xml');
-$response = $pcurl->post('<a>makapaka</a>');
+$response = $pcurl->post('/igipigiel/xml', '<a>makapaka</a>');
 ```
 
 Enjoy!

@@ -18,7 +18,8 @@ To install PCurl, use the following composer `require` statement:
 
 ```
 
-# Usage
+Usage
+------------
 
 Simple GET
 ```

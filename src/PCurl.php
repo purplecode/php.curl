@@ -13,6 +13,11 @@ class PCurl {
   private $headers;
 
   public function __construct($host) {
+
+    if (!function_exists('curl_init')) {
+      throw new PCurlException('CURL module not available! See http://php.net/manual/en/book.curl.php');
+    }
+
     $this->host = $host;
     $this->headers = array();
     $this->options = array();
@@ -62,6 +67,14 @@ class PCurl {
   public function put($url, $data) {
     $this->setOption(CURLOPT_CUSTOMREQUEST, 'PUT');
     $this->setOption(CURLOPT_POSTFIELDS, $data);
+    return $this->exec($url);
+  }
+
+  /**
+   * @return string
+   */
+  public function delete($url) {
+    $this->setOption(CURLOPT_CUSTOMREQUEST, 'DELETE');
     return $this->exec($url);
   }
 

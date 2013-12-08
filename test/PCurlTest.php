@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . '/../src/PCurl.php');
+require_once (dirname(__FILE__) . '/../src/PurpleCode/PCurl/PCurl.php');
 
 use PurpleCode\PCurl\PCurl;
 

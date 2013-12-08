@@ -8,11 +8,11 @@
  * under the terms of the MIT License (see http://en.wikipedia.org/wiki/MIT_License)
  */
 
-namespace PurpleCode;
+namespace PurpleCode\PCurl;
 
 require_once 'PCurlException.php';
 
-use PurpleCode\PCurlException;
+use PurpleCode\PCurl\PCurlException;
 
 class PCurl {
 

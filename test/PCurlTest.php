@@ -2,25 +2,13 @@
 
 require_once (dirname(__FILE__) . '/../src/PCurl.php');
 
-use PurpleCode\PCurl;
+use PurpleCode\PCurl\PCurl;
 
 class PCurlTest extends PHPUnit_Framework_TestCase {
 
 	private function getCACertBundlePath() {
 		return __DIR__.'\ca-cert.crt';
 	}
-
-    public function testShouldGetGooglePageViaHttp() {
-        // given
-         $cut = new PCurl('http://www.google.pl');
-
-        // when
-        $response = $cut->get('/');
-
-        // then
-        $this->assertSelectRegExp('title', '/Google/', 1, $response);
-  }
-
 
     public function testShouldGetGooglePageViaHttp() {
         // given
@@ -50,7 +38,7 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
          $cut = new PCurl('https://www.google.com');
 
          // then
-         $this->setExpectedException('PurpleCode\PCurlException');
+         $this->setExpectedException('PurpleCode\PCurl\PCurlException');
 
         // when
         $response = $cut->get('/');

@@ -8,7 +8,7 @@
  * under the terms of the MIT License (see http://en.wikipedia.org/wiki/MIT_License)
  */
 
-namespace PurpleCode;
+namespace PurpleCode\PCurl;
 
 class PCurlException extends \Exception {
 

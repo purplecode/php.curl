@@ -46,7 +46,7 @@ $cut->proxy(host, port);
 $cut->auth(user, pass);
 $cut->header('Cache-Control: no-cache');
 $cut->contentType('application/xml');
-$response = $cut->get('/');
+$response = $cut->post('<a>makapaka</a>');
 ```
 
 Enjoy!

@@ -21,6 +21,18 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
         $this->assertSelectRegExp('title', '/Google/', 1, $response);
   }
 
+
+    public function testShouldGetGooglePageViaHttp() {
+        // given
+         $cut = new PCurl('http://www.google.pl');
+
+        // when
+        $response = $cut->get('/');
+
+        // then
+        $this->assertSelectRegExp('title', '/Google/', 1, $response);
+  }
+
 	public function testShouldGetGooglePageAndCheckHttpsCertificate() {
         // given
          $cut = new PCurl('https://www.google.pl');

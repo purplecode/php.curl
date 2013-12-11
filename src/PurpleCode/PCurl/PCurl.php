@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PCurl is a REST client libary for PHP.
  *
@@ -46,36 +47,34 @@ class PCurl {
    */
   public function call($method, $url, $payload = '') {
     if ($method == "POST") {
-      return $this->post($url, $payload);
+      $this->setOption(CURLOPT_POST, true);
+      $this->setOption(CURLOPT_POSTFIELDS, $payload);
     } else if ($method == "PUT") {
-      return $this->put($url, $payload);
+      $this->setOption(CURLOPT_CUSTOMREQUEST, 'PUT');
+      $this->setOption(CURLOPT_POSTFIELDS, $payload);
     }
-    return $this->get($url);
+    return $this->exec($url);
   }
 
   /**
    * @return string
    */
   public function get($url) {
-    return $this->exec($url);
+    return $this->call('GET', $url);
   }
 
   /**
    * @return string
    */
   public function post($url, $data) {
-    $this->setOption(CURLOPT_POST, 1);
-    $this->setOption(CURLOPT_POSTFIELDS, $data);
-    return $this->exec($url);
+    return $this->call('POST', $url, $data);
   }
 
   /**
    * @return string
    */
   public function put($url, $data) {
-    $this->setOption(CURLOPT_CUSTOMREQUEST, 'PUT');
-    $this->setOption(CURLOPT_POSTFIELDS, $data);
-    return $this->exec($url);
+    return $this->call('PUT', $url, $data);
   }
 
   /**
@@ -186,8 +185,19 @@ class PCurl {
     return $this;
   }
 
+  /**
+   * @return PCurl
+   */
   public function setOption($optionKey, $optionValue) {
     $this->options[$optionKey] = $optionValue;
+    return $this;
+  }
+
+  /**
+   * @return PCurl
+   */
+  public function getOption($optionKey) {
+    return $this->options[$optionKey];
   }
 
 }

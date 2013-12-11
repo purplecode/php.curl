@@ -22,6 +22,8 @@ or just copy-paste content of `src/` to your `libs`.
 Usage
 ------------
 
+### PCurl.php
+
 Simple GET
 ```
 $pcurl = new PCurl('http://www.google.pl');
@@ -51,4 +53,23 @@ $pcurl->contentType('application/xml');
 $response = $pcurl->post('/igipigiel/xml', '<a>makapaka</a>');
 ```
 
+### PJsonCurl.php
+
+Class similar to PCurl, the only difference is that the input/output is passed through json_encode/json_decode.
+```
+$pcurl = new PJsonCurl('http://www.app.com/json');
+$response = $pcurl->put('/', array('a' => 'b'));
+echo $response['c'];
+```
+
+### PObjectCurl.php
+
+Class similar to PJsonCurl, the difference is that the input/output is passed through serialize/deserialize methods. Requires [JMS\Serializer](https://github.com/schmittjoh/serializer) library or [JMSSerializerBundle](https://github.com/schmittjoh/JMSSerializerBundle) Symfony2 bundle.
+
+```
+$pcurl = new PObjectCurl('http://www.prettifier.com/json', JMS\Serializer\SerializerInterface $serializer);
+$pcurl->responseClass('My\App\Preety');
+$uglyObject =  new My\App\Ugly();
+$preetyObject = $pcurl->put('/', $uglyObject);
+```
 Enjoy!

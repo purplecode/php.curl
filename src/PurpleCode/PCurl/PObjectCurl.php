@@ -11,6 +11,7 @@
 
 namespace PurpleCode\PCurl;
 
+use JMS\Serializer\Exception\RuntimeException;
 use JMS\Serializer\SerializerInterface;
 
 class PObjectCurl extends PCurl {
@@ -24,7 +25,7 @@ class PObjectCurl extends PCurl {
   public function __construct($host, SerializerInterface $serializer) {
     parent::__construct($host);
     $this->serializer = $serializer;
-    
+
     $this->contentTypeJson();
   }
 
@@ -33,8 +34,26 @@ class PObjectCurl extends PCurl {
   }
 
   public function call($method, $url, $payload = '') {
-    $response = parent::call($method, $url, empty($payload) ? $payload : $this->serializer->serialize($payload, 'json'));
-    return $this->responseClass ? $this->serializer->deserialize($response, $this->responseClass, 'json') : $response;
+    $payload = $this->serialize($payload);
+    $response = parent::call($method, $url, $payload);
+    return $this->deserialize($response);
+  }
+
+  private function serialize($payload) {
+    try {
+      return empty($payload) ? $payload : $this->serializer->serialize($payload, 'json');
+    } catch (RuntimeException $e) {
+      throw new PCurlException(sprintf('Unable to serialize payload - %s : %s', $e->getMessage(), $payload));
+    }
+  }
+
+  private function deserialize($response) {
+    try {
+      return $this->responseClass ? $this->serializer->deserialize($response, $this->responseClass, 'json') : $response;
+    } catch (RuntimeException $e) {
+      var_dump($response);
+      throw new PCurlException(sprintf('Unable to deserialize response - %s : %s', $e->getMessage(), $response));
+    }
   }
 
 }

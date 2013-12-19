@@ -13,6 +13,12 @@ namespace PurpleCode\PCurl;
 
 class PJsonCurl extends PCurl {
 
+  public function __construct($host) {
+    parent::__construct($host);
+    
+    $this->contentTypeJson();
+  }
+
   public function call($method, $url, $payload = '') {
     return json_decode(parent::call($method, $url, json_encode($payload)));
   }

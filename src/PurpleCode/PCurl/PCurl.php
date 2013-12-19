@@ -193,9 +193,6 @@ class PCurl {
     return $this;
   }
 
-  /**
-   * @return PCurl
-   */
   public function getOption($optionKey) {
     return $this->options[$optionKey];
   }

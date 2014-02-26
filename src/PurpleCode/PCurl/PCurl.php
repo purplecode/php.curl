@@ -126,7 +126,7 @@ class PCurl {
   /**
    * @return PCurl
    */
-  public function proxy($host, $port, $user = null, $password = null) {
+  public function proxy($host, $port = 8080, $user = null, $password = null) {
     $this->setOption(CURLOPT_PROXYTYPE, 'HTTP');
     $this->setOption(CURLOPT_PROXY, $host);
     $this->setOption(CURLOPT_PROXYPORT, $port);

@@ -13,14 +13,23 @@ namespace PurpleCode\PCurl;
 
 class PJsonCurl extends PCurl {
 
+  private $arrayResponse;
+
   public function __construct($host) {
     parent::__construct($host);
-    
+
+    $this->arrayResponse = false;
     $this->contentTypeJson();
   }
 
   public function call($method, $url, $payload = '') {
-    return json_decode(parent::call($method, $url, json_encode($payload)));
+    $payload = json_encode($payload);
+    $response = parent::call($method, $url, $payload);
+    return json_decode($response, $this->arrayResponse);
+  }
+
+  public function arrayResponse($arrayResponse = true) {
+    $this->arrayResponse = $arrayResponse;
   }
 
 }

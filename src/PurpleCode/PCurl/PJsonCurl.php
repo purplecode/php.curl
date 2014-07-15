@@ -11,6 +11,8 @@
 
 namespace PurpleCode\PCurl;
 
+use PurpleCode\PCurl\PCurlJsonResponse;
+
 class PJsonCurl extends PCurl {
 
   private $arrayResponse;
@@ -25,7 +27,7 @@ class PJsonCurl extends PCurl {
   public function call($method, $url, $payload = '') {
     $payload = json_encode($payload);
     $response = parent::call($method, $url, $payload);
-    return json_decode($response, $this->arrayResponse);
+    return new PCurlJsonResponse($response->getHeader(), $response->getBody(), $this->arrayResponse);
   }
 
   public function arrayResponse($arrayResponse = true) {

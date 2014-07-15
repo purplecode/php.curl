@@ -38,8 +38,8 @@ class PCurl {
     $this->setOption(CURLOPT_SSL_VERIFYPEER, true);
     // should curl_exec return response, not print it on stdout
     $this->setOption(CURLOPT_RETURNTRANSFER, true);
-    // should not include headers in response
-    $this->setOption(CURLOPT_HEADER, 0);
+    // should include headers in response
+    $this->setOption(CURLOPT_HEADER, 1);
   }
 
   /**
@@ -103,8 +103,16 @@ class PCurl {
       curl_close($curl);
       throw new PCurlException($error);
     }
+
+    $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
     curl_close($curl);
-    return $response;
+
+    $header = substr($response, 0, $header_size);
+    $body = substr($response, $header_size);
+
+    $processedResponse = $this->postProcessResponseBody($header, $body);
+
+    return $body;
   }
 
   /**
@@ -134,6 +142,15 @@ class PCurl {
       $this->setOption(CURLOPT_PROXYUSERPWD, $user . ":" . $password);
     }
     return $this;
+  }
+
+  /**
+   * Allow to postprocess response body, ex. parse to specified format.
+   * @param string $header
+   * @param string $body
+   */
+  protected function postProcessResponseBody($header, $body){
+      return $body;
   }
 
   /**

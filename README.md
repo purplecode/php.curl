@@ -27,20 +27,20 @@ Usage
 Simple GET
 ```
 $pcurl = new PCurl('http://www.google.pl');
-$response = $pcurl->get('/');
+$response = $pcurl->get('/')->getBody();
 ```
 
 Simple GET via HTTPS with certificate verification (more examples in test package)
 ```
 $pcurl = new PCurl('https://www.google.pl');
 $pcurl->useSSLCertificate(<path to crt/pem file>);
-$response = $pcurl->get('/');
+$response = $pcurl->get('/')->getBody();
 ```
 and a similar example without it
 ```
 $pcurl = new PCurl('https://www.google.pl');
 $pcurl->ignoreSSLCertificate();
-$response = $pcurl->get('/');
+$response = $pcurl->get('/')->getBody();
 ```
 
 Sample POST
@@ -50,7 +50,7 @@ $pcurl->proxy(host, port);
 $pcurl->auth(user, pass);
 $pcurl->header('Cache-Control: no-cache');
 $pcurl->contentType('application/xml');
-$response = $pcurl->post('/igipigiel/xml', '<a>makapaka</a>');
+$response = $pcurl->post('/igipigiel/xml', '<a>makapaka</a>')->getBody();
 ```
 
 ### PJsonCurl.php
@@ -59,7 +59,7 @@ Class similar to PCurl, the only difference is that the input/output is passed t
 ```
 $pcurl = new PJsonCurl('http://www.app.com/json');
 $response = $pcurl->put('/', array('a' => 'b'));
-echo $response['c'];
+echo $response->getBody()['c'];
 ```
 
 ### PObjectCurl.php
@@ -70,6 +70,6 @@ Class similar to PJsonCurl, the difference is that the input/output is passed th
 $pcurl = new PObjectCurl('http://www.prettifier.com/json', JMS\Serializer\SerializerInterface $serializer);
 $pcurl->responseClass('My\App\Preety');
 $uglyObject =  new My\App\Ugly();
-$preetyObject = $pcurl->put('/', $uglyObject);
+$preetyObject = $pcurl->put('/', $uglyObject)->getBody();
 ```
 Enjoy!

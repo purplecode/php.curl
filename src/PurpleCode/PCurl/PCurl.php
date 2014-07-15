@@ -12,8 +12,10 @@
 namespace PurpleCode\PCurl;
 
 require_once 'PCurlException.php';
+require_once 'PCurlResponse.php';
 
 use PurpleCode\PCurl\PCurlException;
+use PurpleCode\PCurl\PCurlResponse;
 
 class PCurl {
 
@@ -110,9 +112,7 @@ class PCurl {
     $header = substr($response, 0, $header_size);
     $body = substr($response, $header_size);
 
-    $processedResponse = $this->postProcessResponseBody($header, $body);
-
-    return $body;
+    return new PCurlResponse($header, $body);
   }
 
   /**
@@ -142,15 +142,6 @@ class PCurl {
       $this->setOption(CURLOPT_PROXYUSERPWD, $user . ":" . $password);
     }
     return $this;
-  }
-
-  /**
-   * Allow to postprocess response body, ex. parse to specified format.
-   * @param string $header
-   * @param string $body
-   */
-  protected function postProcessResponseBody($header, $body){
-      return $body;
   }
 
   /**

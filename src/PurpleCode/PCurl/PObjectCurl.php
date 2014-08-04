@@ -36,7 +36,7 @@ class PObjectCurl extends PCurl {
   public function call($method, $url, $payload = '') {
     $payload = $this->serialize($payload);
     $response = parent::call($method, $url, $payload);
-    $response->setBody($this->deserialize($response));
+    $response->setBody($this->deserialize($response->getBody()));
     return $response;
   }
 

@@ -34,8 +34,6 @@ class PCurl {
     $this->options = array();
 
     $this->setOption(CURLOPT_TIMEOUT, 30);
-    // forced to use SSL3.0
-    $this->setOption(CURLOPT_SSLVERSION, 3);
     // verify SSL certificates
     $this->setOption(CURLOPT_SSL_VERIFYPEER, true);
     // should curl_exec return response, not print it on stdout

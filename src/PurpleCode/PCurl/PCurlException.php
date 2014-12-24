@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PCurl is a REST client libary for PHP.
  *
@@ -18,7 +19,7 @@ class PCurlException extends \Exception {
 
   public static function assert($condition, $message, $arguments = array(), $code = 400) {
     if (!$condition) {
-      $arguments = array_map('json_encode', ArrayUtils::ensureArray($arguments));
+      $arguments = array_map('json_encode', self::ensureArray($arguments));
       $arguments = array_merge(array($message), $arguments);
       $message = call_user_func_array('sprintf', $arguments);
       $class = self::getClassName();
@@ -30,7 +31,7 @@ class PCurlException extends \Exception {
     parent::__construct($message, $code, $previous);
   }
 
-  public function ensureArray($item) {
+  private static function ensureArray($item) {
     if (is_null($item)) {
       return array();
     }

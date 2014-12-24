@@ -16,8 +16,10 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
 
         // when
         $response = $cut->get('/');
+
         // then
         $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
+        $this->assertEquals(200, $response->getHttpCode());
   }
 
     public function testShouldGetGooglePageAndCheckHttpsCertificate() {
@@ -42,5 +44,31 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
         // when
         $response = $cut->get('/');
   }
+
+  public function testShouldSetProperResponseCodeOnBadRequest() {
+    // given
+    $cut = new PCurl('http://www.google.com/pcurlnotfound');
+
+    // then
+    //$this->setExpectedException('PurpleCode\PCurl\PCurlException');
+
+    // when
+    $response = $cut->get('/');
+    
+    // then 
+    $this->assertEquals(404, $response->getHttpCode());
+  }
+
+  public function testShouldRaiseErrorOnSuccessAssertion() {
+    // given
+    $cut = new PCurl('http://www.google.com/pcurlnotfound');
+
+    // then
+    $this->setExpectedException('PurpleCode\PCurl\PCurlException');
+
+    // when
+    $response = $cut->get('/')->assertSuccess();
+  }
+
 
 }

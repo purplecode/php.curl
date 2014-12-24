@@ -9,10 +9,12 @@
  * under the terms of the MIT License (see http://en.wikipedia.org/wiki/MIT_License)
  */
 
-namespace PurpleCode\PCurl;
+namespace PurpleCode\PCurl\Object;
 
 use JMS\Serializer\Exception\RuntimeException;
 use JMS\Serializer\SerializerInterface;
+use PurpleCode\PCurl\PCurl;
+use PurpleCode\PCurl\PCurlException;
 
 class PObjectCurl extends PCurl {
 
@@ -33,11 +35,14 @@ class PObjectCurl extends PCurl {
     $this->responseClass = $class;
   }
 
+  /**
+   * @return PObjectCurlResponse
+   */
   public function call($method, $url, $payload = '') {
     $payload = $this->serialize($payload);
     $response = parent::call($method, $url, $payload);
-    $response->setBody($this->deserialize($response->getBody()));
-    return $response;
+    $object = $this->deserialize($response->getBody());
+    return new PObjectCurlResponse($response->getHeader(), $response->getBody(), $response->getHttpCode(), $object);
   }
 
   private function serialize($payload) {
@@ -49,10 +54,12 @@ class PObjectCurl extends PCurl {
   }
 
   private function deserialize($response) {
+    if (empty($this->responseClass)) {
+      return $response;
+    }
     try {
       return $this->responseClass ? $this->serializer->deserialize($response, $this->responseClass, 'json') : $response;
     } catch (RuntimeException $e) {
-      var_dump($response);
       throw new PCurlException(sprintf('Unable to deserialize response - %s : %s', $e->getMessage(), $response));
     }
   }

@@ -11,29 +11,44 @@
 
 namespace PurpleCode\PCurl;
 
-
 class PCurlResponse {
+
   private $body;
   private $header;
 
-  public function __construct($header, $body){
+  public function __construct($header, $body, $httpCode) {
     $this->header = $header;
     $this->body = $body;
+    $this->httpCode = $httpCode;
   }
 
-  public function setBody($body){
+  public function setBody($body) {
     $this->body = $body;
   }
 
-  public function getBody(){
+  public function getBody() {
     return $this->body;
   }
 
-  public function setHeader($header){
+  public function setHeader($header) {
     $this->header = $header;
   }
 
-  public function getHeader(){
+  public function getHeader() {
     return $this->header;
   }
+
+  public function setHttpCode($httpCode) {
+    $this->httpCode = $httpCode;
+  }
+
+  public function getHttpCode() {
+    return $this->httpCode;
+  }
+
+  public function assertSuccess() {
+    PCurlException::assert($this->getHttpCode() == 200, "Request failed (" . $this->getHttpCode() . ")");
+    return $this;
+  }
+
 }

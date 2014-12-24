@@ -104,13 +104,15 @@ class PCurl {
       throw new PCurlException($error);
     }
 
-    $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+    $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    
     curl_close($curl);
 
-    $header = substr($response, 0, $header_size);
-    $body = substr($response, $header_size);
+    $header = substr($response, 0, $headerSize);
+    $body = substr($response, $headerSize);
 
-    return new PCurlResponse($header, $body);
+    return new PCurlResponse($header, $body, $httpCode);
   }
 
   /**
@@ -179,6 +181,7 @@ class PCurl {
    */
   public function ignoreSSLCertificate($bool = true) {
     $this->setOption(CURLOPT_SSL_VERIFYPEER, !$bool);
+    $this->setOption(CURLOPT_SSL_VERIFYHOST, 0);
     return $this;
   }
 

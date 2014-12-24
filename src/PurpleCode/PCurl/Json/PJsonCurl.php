@@ -40,7 +40,7 @@ class PJsonCurl extends PCurl {
   }
 
   private function deserialize($response) {
-    $json =  json_decode($response, $this->deserializeToArray);
+    $json = json_decode($response, $this->deserializeToArray);
 
     PCurlException::assert($this->isValidJson($response) && json_last_error() == JSON_ERROR_NONE, "Invalid JSON response format");
 

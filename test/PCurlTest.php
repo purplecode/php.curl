@@ -6,43 +6,43 @@ use PurpleCode\PCurl\PCurl;
 
 class PCurlTest extends PHPUnit_Framework_TestCase {
 
-    private function getCACertBundlePath() {
-        return __DIR__.'\ca-cert.crt';
-    }
-
-    public function testShouldGetGooglePageViaHttp() {
-        // given
-        $cut = new PCurl('http://www.google.pl');
-
-        // when
-        $response = $cut->get('/');
-
-        // then
-        $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
-        $this->assertEquals(200, $response->getHttpCode());
+  private function getCACertBundlePath() {
+    return __DIR__ . '\ca-cert.crt';
   }
 
-    public function testShouldGetGooglePageAndCheckHttpsCertificate() {
-        // given
-        $cut = new PCurl('https://www.google.pl');
-        $cut->useSSLCertificate($this->getCACertBundlePath());
+  public function testShouldGetGooglePageViaHttp() {
+    // given
+    $cut = new PCurl('http://www.google.pl');
 
-        // when
-        $response = $cut->get('/');
+    // when
+    $response = $cut->get('/');
 
-        // then
-        $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
-      }
+    // then
+    $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
+    $this->assertEquals(200, $response->getHttpCode());
+  }
 
-    public function testShouldGetGooglePageAndThrowExceptionOnMissingCertificate() {
-        // given
-         $cut = new PCurl('https://www.google.com');
+  public function testShouldGetGooglePageAndCheckHttpsCertificate() {
+    // given
+    $cut = new PCurl('https://www.google.pl');
+    $cut->useSSLCertificate($this->getCACertBundlePath());
 
-        // then
-        $this->setExpectedException('PurpleCode\PCurl\PCurlException');
+    // when
+    $response = $cut->get('/');
 
-        // when
-        $response = $cut->get('/');
+    // then
+    $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
+  }
+
+  public function testShouldGetGooglePageAndThrowExceptionOnMissingCertificate() {
+    // given
+    $cut = new PCurl('https://www.google.com');
+
+    // then
+    $this->setExpectedException('PurpleCode\PCurl\PCurlException');
+
+    // when
+    $response = $cut->get('/');
   }
 
   public function testShouldSetProperResponseCodeOnBadRequest() {
@@ -51,10 +51,9 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
 
     // then
     //$this->setExpectedException('PurpleCode\PCurl\PCurlException');
-
     // when
     $response = $cut->get('/');
-    
+
     // then 
     $this->assertEquals(404, $response->getHttpCode());
   }
@@ -69,6 +68,5 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
     // when
     $response = $cut->get('/')->assertSuccess();
   }
-
 
 }

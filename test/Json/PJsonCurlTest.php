@@ -1,17 +1,13 @@
 <?php
 
-require_once (dirname(__FILE__) . '/../src/PurpleCode/PCurl/PCurlResponse.php');
-require_once (dirname(__FILE__) . '/../src/PurpleCode/PCurl/Json/PJsonCurlResponse.php');
-require_once (dirname(__FILE__) . '/../src/PurpleCode/PCurl/PCurl.php');
-require_once (dirname(__FILE__) . '/../src/PurpleCode/PCurl/Json/PJsonCurl.php');
+require_once (dirname(__FILE__) . '/../../src/PurpleCode/PCurl/PCurlResponse.php');
+require_once (dirname(__FILE__) . '/../../src/PurpleCode/PCurl/Json/PJsonCurlResponse.php');
+require_once (dirname(__FILE__) . '/../../src/PurpleCode/PCurl/PCurl.php');
+require_once (dirname(__FILE__) . '/../../src/PurpleCode/PCurl/Json/PJsonCurl.php');
 
 use PurpleCode\PCurl\Json\PJsonCurl;
 
 class PJsonCurlTest extends PHPUnit_Framework_TestCase {
-
-  private function getCACertBundlePath() {
-    return __DIR__ . '\ca-cert.crt';
-  }
 
   public function testShouldGetJsonFileAndParse() {
     // given  

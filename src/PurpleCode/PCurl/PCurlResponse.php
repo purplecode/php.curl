@@ -47,7 +47,7 @@ class PCurlResponse {
   }
 
   public function assertSuccess() {
-    PCurlException::assert($this->getHttpCode() == 200, "Request failed (" . $this->getHttpCode() . ")");
+    PCurlException::assert($this->getHttpCode() == 200, "Request failed (" . $this->getHttpCode() . ")", array(), $this->getHttpCode());
     return $this;
   }
 

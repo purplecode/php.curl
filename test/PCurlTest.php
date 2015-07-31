@@ -18,7 +18,7 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
     $response = $cut->get('/');
 
     // then
-    $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
+    $this->assertSelectEquals('title', '/Google/', 1, $response->getBody());
     $this->assertEquals(200, $response->getHttpCode());
   }
 
@@ -31,7 +31,7 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
     $response = $cut->get('/');
 
     // then
-    $this->assertSelectRegExp('title', '/Google/', 1, $response->getBody());
+    $this->assertSelectEquals('title', '/Google/', 1, $response->getBody());
   }
 
   public function testShouldGetGooglePageAndThrowExceptionOnMissingCertificate() {
@@ -42,15 +42,13 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
     $this->setExpectedException('PurpleCode\PCurl\PCurlException');
 
     // when
-    $response = $cut->get('/');
+    $cut->get('/');
   }
 
   public function testShouldSetProperResponseCodeOnBadRequest() {
     // given
     $cut = new PCurl('http://www.google.com/pcurlnotfound');
 
-    // then
-    //$this->setExpectedException('PurpleCode\PCurl\PCurlException');
     // when
     $response = $cut->get('/');
 
@@ -66,7 +64,7 @@ class PCurlTest extends PHPUnit_Framework_TestCase {
     $this->setExpectedException('PurpleCode\PCurl\PCurlException');
 
     // when
-    $response = $cut->get('/')->assertSuccess();
+    $cut->get('/')->assertSuccess();
   }
 
 }

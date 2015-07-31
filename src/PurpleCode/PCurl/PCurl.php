@@ -26,7 +26,7 @@ class PCurl {
   public function __construct($host) {
 
     if (!function_exists('curl_init')) {
-      throw new PCurlException('CURL module not available! See http://php.net/manual/en/book.curl.php');
+      throw new PCurlException('CURL module not available! See http://php.net/manual/en/book.curl.php', 500, 2 /*CURLE_FAILED_INIT */);
     }
 
     $this->host = $host;
@@ -100,8 +100,9 @@ class PCurl {
     $response = curl_exec($curl);
     if (!$response) {
       $error = curl_error($curl);
+      $errorCode = curl_errno($curl);
       curl_close($curl);
-      throw new PCurlException($error);
+      throw new PCurlException($error, 400, $errorCode);
     }
 
     $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);

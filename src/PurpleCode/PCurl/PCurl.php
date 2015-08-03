@@ -106,7 +106,7 @@ class PCurl {
     }
 
     $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $httpCode = intval(curl_getinfo($curl, CURLINFO_HTTP_CODE));
     
     curl_close($curl);
 

@@ -43,7 +43,7 @@ class PCurlException extends \Exception
     public function __construct($message = "Exception", $httpCode = 400, $curlErrorCode = CURLE_OK, $previous = null)
     {
         parent::__construct($message, $curlErrorCode, $previous);
-        $this->httpCode = intval($httpCode);
+        $this->httpCode = $httpCode;
     }
 
     public function getHttpCode(){

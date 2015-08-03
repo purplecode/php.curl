@@ -19,7 +19,7 @@ class PCurlResponse {
   public function __construct($header, $body, $httpCode) {
     $this->header = $header;
     $this->body = $body;
-    $this->httpCode = intval($httpCode);
+    $this->httpCode = $httpCode;
   }
 
   public function setBody($body) {
